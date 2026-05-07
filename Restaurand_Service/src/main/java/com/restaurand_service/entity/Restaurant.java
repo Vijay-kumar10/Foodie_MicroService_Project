@@ -26,7 +26,8 @@ public class Restaurant {
     private String picture;
 
     @ElementCollection
-    private List<String> pictures = new ArrayList<>();    //priority 1
+    private List<String> pictures = new ArrayList<>();
+    //priority 1
     private boolean open  = false;
 
     //priority 2
