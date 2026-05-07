@@ -1,0 +1,16 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: Food_Service
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/foodServiceDb?createDatabaseIfNotExist=true
+    username: root
+    password: Vijay
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
