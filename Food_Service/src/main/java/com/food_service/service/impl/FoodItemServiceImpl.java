@@ -7,6 +7,7 @@ import com.food_service.entity.FoodItem;
 import com.food_service.repository.FoodCategoryRepo;
 import com.food_service.repository.FoodItemRepo;
 import com.food_service.service.FoodItemService;
+import com.food_service.service.external.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -25,6 +27,12 @@ public class FoodItemServiceImpl implements FoodItemService {
     private final FoodCategoryRepo categoryRepository;
     private final ModelMapper modelMapper;
     private final RestTemplate restTemplate;
+
+    //feignClient
+    private final RestaurantService restaurantService;
+
+    //webclient
+    private final WebClient webClient;
 
     @Override
     public FoodItemDto create(FoodItemDto dto) {
@@ -70,9 +78,15 @@ public class FoodItemServiceImpl implements FoodItemService {
 
         //call to restaurant to service to get Restaurant data
         //restaurant url
-        String resturantUrl = "http://localhost:9091/api/v1/restaurants/" + item.getRestaurantId();
+//        String resturantUrl = "http://localhost:9091/api/v1/restaurants/" + item.getRestaurantId();
+//        RestaurantDto restaurantDto = restTemplate.getForObject(resturantUrl, RestaurantDto.class);
 
-        RestaurantDto restaurantDto = restTemplate.getForObject(resturantUrl, RestaurantDto.class);
+        //get restaurant using feign client
+//        RestaurantDto restaurant = restaurantService.getById(item.getRestaurantId());
+
+        //get restaurant using web-client
+       RestaurantDto restaurantDto = webClient.get().uri("/api/v1/restaurants/{id}", item.getRestaurantId())
+                .retrieve().bodyToMono(RestaurantDto.class).block();
 
         FoodItemDto dto = modelMapper.map(item, FoodItemDto.class);
         dto.setRestaurant(restaurantDto);
