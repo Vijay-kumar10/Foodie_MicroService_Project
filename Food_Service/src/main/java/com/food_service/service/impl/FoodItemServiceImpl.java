@@ -7,6 +7,7 @@ import com.food_service.entity.FoodItem;
 import com.food_service.repository.FoodCategoryRepo;
 import com.food_service.repository.FoodItemRepo;
 import com.food_service.service.FoodItemService;
+import com.food_service.service.external.RestWebClientService;
 import com.food_service.service.external.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,7 +33,7 @@ public class FoodItemServiceImpl implements FoodItemService {
     private final RestaurantService restaurantService;
 
     //webclient
-    private final WebClient webClient;
+    private final RestWebClientService restWebClientService;
 
     @Override
     public FoodItemDto create(FoodItemDto dto) {
@@ -82,14 +83,13 @@ public class FoodItemServiceImpl implements FoodItemService {
 //        RestaurantDto restaurantDto = restTemplate.getForObject(resturantUrl, RestaurantDto.class);
 
         //get restaurant using feign client
-//        RestaurantDto restaurant = restaurantService.getById(item.getRestaurantId());
+//        RestaurantDto restaurantDto = restaurantService.getById(item.getRestaurantId());
 
         //get restaurant using web-client
-       RestaurantDto restaurantDto = webClient.get().uri("/api/v1/restaurants/{id}", item.getRestaurantId())
-                .retrieve().bodyToMono(RestaurantDto.class).block();
+       RestaurantDto restaurantDto = restaurantService.getById(item.getRestaurantId());
 
         FoodItemDto dto = modelMapper.map(item, FoodItemDto.class);
-        dto.setRestaurant(restaurantDto);
+        dto.setRestaurantDto(restaurantDto);
         dto.setCategoryId(item.getFoodCategory().getId());
 
         return dto;

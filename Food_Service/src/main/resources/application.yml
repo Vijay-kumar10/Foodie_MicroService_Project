@@ -3,10 +3,9 @@ server:
 
 spring:
   application:
-    name: Food_Service
-
+    name: Food-Service
   datasource:
-    url: jdbc:mysql://localhost:3307/foodServiceDb?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3307/Food_Service_DB?createDatabaseIfNotExist=true
     username: root
     password: Vijay
 
@@ -14,3 +13,13 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+        defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost

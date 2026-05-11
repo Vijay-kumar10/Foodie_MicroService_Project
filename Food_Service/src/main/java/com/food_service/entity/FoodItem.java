@@ -28,7 +28,6 @@ public class FoodItem {
     @ManyToOne
     private FoodCategory foodCategory;
 
-
     //store the Restaurant Item
     @Column(nullable = false)
     private String restaurantId;

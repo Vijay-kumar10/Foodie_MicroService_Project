@@ -30,5 +30,5 @@ public class FoodItemDto {
 
     private String restaurantId;
 
-    private RestaurantDto restaurant;
+    private RestaurantDto restaurantDto;
 }
