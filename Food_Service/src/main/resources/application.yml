@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: Food-Service
+    name: food-service
   datasource:
     url: jdbc:mysql://localhost:3307/Food_Service_DB?createDatabaseIfNotExist=true
     username: root
