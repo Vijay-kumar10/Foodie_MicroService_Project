@@ -1,12 +1,14 @@
 package com.food_service.service.external;
 
+import com.food_service.config.AppConstant;
 import com.food_service.dto.RestaurantDto;
+import com.food_service.service.external.fallback.RestaurantServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "RESTAURANT-SERVICE")
+@FeignClient(name = AppConstant.RESTAURANT_SERVICE_NAME, fallback = RestaurantServiceFallback.class)
 public interface RestaurantService {
 
     //get restaurant by id

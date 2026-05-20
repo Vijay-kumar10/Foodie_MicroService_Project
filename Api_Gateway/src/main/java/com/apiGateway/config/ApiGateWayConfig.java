@@ -14,12 +14,17 @@ public class ApiGateWayConfig {
 
                 .route("food-service", r -> r
                         .path("/foods/**")
-                        .filters(f -> f.rewritePath("/foods/(?<segment>.*)", "/${segment}"))
+                        .filters(f -> f.rewritePath("/foods/(?<segment>.*)", "/${segment}")
+                                . circuitBreaker( c-> c.setName("circuitBreakerFood")
+                                        .setFallbackUri("forward:/circuitBreaker/fallback")
+                                ))
+
                         .uri("lb://FOOD-SERVICE"))
 
                 .route("restaurant-service", r -> r
                         .path("/restaurant/**")
-                        .filters(f -> f.rewritePath("/restaurant/(?<segment>.*)", "/${segment}"))
+                        .filters(f -> f.rewritePath("/restaurant/(?<segment>.*)", "/${segment}")
+                        . circuitBreaker( c-> c.setName("circuitBreakerRestaurant")))
                         .uri("lb://RESTAURANT-SERVICE"))
 
                 .build();

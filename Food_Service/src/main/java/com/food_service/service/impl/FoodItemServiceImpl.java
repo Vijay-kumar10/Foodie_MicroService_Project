@@ -82,11 +82,11 @@ public class FoodItemServiceImpl implements FoodItemService {
 //        String resturantUrl = "http://localhost:9091/api/v1/restaurants/" + item.getRestaurantId();
 //        RestaurantDto restaurantDto = restTemplate.getForObject(resturantUrl, RestaurantDto.class);
 
-        //get restaurant using feign client
-//        RestaurantDto restaurantDto = restaurantService.getById(item.getRestaurantId());
-
         //get restaurant using web-client
-       RestaurantDto restaurantDto = restaurantService.getById(item.getRestaurantId());
+//       RestaurantDto restaurantDto = restWebClientService.getById(item.getRestaurantId());
+
+        //get restaurant using feign client
+        RestaurantDto restaurantDto = restaurantService.getById(item.getRestaurantId());
 
         FoodItemDto dto = modelMapper.map(item, FoodItemDto.class);
         dto.setRestaurantDto(restaurantDto);
