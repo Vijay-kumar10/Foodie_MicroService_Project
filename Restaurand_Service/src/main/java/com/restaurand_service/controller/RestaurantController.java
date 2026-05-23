@@ -35,10 +35,16 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurant);
     }
 
+    int count = 0;
     // Get Restaurant By Id
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable String id) {
         RestaurantDto restaurant =restaurantService.getRestaurantById(id);
+        count++;
+        if(count <=3){
+            System.out.println("Retring : "+count);
+            throw new RuntimeException("Server down");
+        }
         return ResponseEntity.ok(restaurant);
     }
 
