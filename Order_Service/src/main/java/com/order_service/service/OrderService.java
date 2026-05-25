@@ -38,7 +38,10 @@ public class OrderService {
         OrderDto orderDto = new OrderDto(order.getOrderId(),Integer.parseInt(order.getAmount()),
                 order.getStatus().toString());
         Message<OrderDto> msg = MessageBuilder.withPayload(orderDto).build();
-        streamBridge.send("orderCreated",msg);
+        streamBridge.send("orderCreated-out-0", msg);
+        System.out.println("Order created : "+order.getOrderId());
+        System.out.println("Order Event Published >>");
+        System.out.println();
 
         return order;
     }
